@@ -24,8 +24,8 @@ export function renderRecipes() {
     const matchesSearch = r.name.toLowerCase().includes(state.searchQuery) || 
                           r.ingredients.some(i => i.name.toLowerCase().includes(state.searchQuery));
     
-    const matchesCategory = state.activeCategoryFilter === 'all' || r.category === state.activeCategoryFilter;
-    const matchesStat = state.activeStatFilter === 'all' || r.type === state.activeStatFilter;
+    const matchesCategory = state.activeCategoryFilter === 'all' || !r.category || r.category === state.activeCategoryFilter;
+    const matchesStat = state.activeStatFilter === 'all' || !r.type || r.type === state.activeStatFilter;
     const matchesBiome = selectedBiomes.includes(r.biome);
 
     return matchesSearch && matchesCategory && matchesStat && matchesBiome;

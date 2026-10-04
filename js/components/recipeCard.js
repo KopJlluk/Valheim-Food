@@ -5,9 +5,18 @@ export function renderIngredientList(recipe, targetQuantity) {
 
   return recipe.ingredients.map(ing => {
     const totalAmount = ing.amount * craftsNeeded;
+    
+    // Берем путь к картинке из ing.image, полученного из словаря INGREDIENTS
+    const iconElement = ing.image 
+      ? `<img src="${ing.image}" alt="${ing.name}" class="w-5 h-5 object-contain inline-block">`
+      : `<span class="text-amber-500">🔸</span>`;
+
     return `
       <li class="flex justify-between items-center text-xs py-1 border-b border-slate-700/50 last:border-none">
-        <span class="text-slate-300">🔸 ${ing.name}</span>
+        <span class="flex items-center gap-2 text-slate-300">
+          ${iconElement}
+          <span>${ing.name}</span>
+        </span>
         <span class="font-bold text-amber-400 bg-amber-500/10 px-2 py-0.5 rounded border border-amber-500/20">
           ${totalAmount} шт.
         </span>
@@ -18,6 +27,20 @@ export function renderIngredientList(recipe, targetQuantity) {
 
 export function createRecipeCardHTML(recipe, userQuantity = 0) {
   const biomeInfo = biomes[recipe.biome] || { name: recipe.biome, color: 'text-slate-400' };
+
+  // Проверяем наличие Эйтра у рецепта
+  const hasEitr = recipe.stats && recipe.stats.eitr;
+  
+  // Меняем сетку: 4 колонки если есть Эйтр, иначе 3
+  const gridColsClass = hasEitr ? 'grid-cols-4' : 'grid-cols-3';
+
+  // Блок для вывода Эйтра
+  const eitrBlock = hasEitr ? `
+    <div>
+      <span class="block text-slate-400 text-[10px] uppercase">Эйтр</span>
+      <span class="font-bold text-purple-400">+${recipe.stats.eitr}</span>
+    </div>
+  ` : '';
 
   return `
     <div class="bg-slate-800 border border-slate-700/80 hover:border-slate-600 rounded-xl p-5 shadow-lg flex flex-col justify-between transition group">
@@ -31,7 +54,8 @@ export function createRecipeCardHTML(recipe, userQuantity = 0) {
           </span>
         </div>
 
-        <div class="grid grid-cols-3 gap-2 my-3 bg-slate-900/60 p-2.5 rounded-lg border border-slate-700/50 text-center text-xs">
+        <!-- БЛОК СТАТОВ С ДИНАМИЧЕСКИМИ КОЛОНКАМИ -->
+        <div class="grid ${gridColsClass} gap-2 my-3 bg-slate-900/60 p-2.5 rounded-lg border border-slate-700/50 text-center text-xs">
           <div>
             <span class="block text-slate-400 text-[10px] uppercase">Здоровье</span>
             <span class="font-bold text-rose-400">+${recipe.stats.hp}</span>
@@ -40,6 +64,7 @@ export function createRecipeCardHTML(recipe, userQuantity = 0) {
             <span class="block text-slate-400 text-[10px] uppercase">Выносл.</span>
             <span class="font-bold text-amber-400">+${recipe.stats.stamina}</span>
           </div>
+          ${eitrBlock}
           <div>
             <span class="block text-slate-400 text-[10px] uppercase">Время</span>
             <span class="font-bold text-slate-300">${recipe.stats.duration}</span>
