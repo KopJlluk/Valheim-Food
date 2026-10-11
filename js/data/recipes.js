@@ -40,9 +40,10 @@ export const recipes = [
         stats: { hp: 37, stamina: 16, duration: '30м' },
         yield: 1,
         ingredients: [
-            { ...INGREDIENTS.bear_meat, amount: 1 },
+            { ...INGREDIENTS.cooked_bear_meat, amount: 1 },
             { ...INGREDIENTS.carrot, amount: 2 },
             { ...INGREDIENTS.blueberries, amount: 1 }
+            
         ]
     },
     // --- Еда: Стамина ---

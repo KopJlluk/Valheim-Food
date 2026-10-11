@@ -18,6 +18,7 @@ export const INGREDIENTS = {
     dragon_eggshell: { name: 'Толченая драконья скорлупа', image: './assets/img/items/dragon_eggshell.webp' },
     squirrel_tendon: { name: 'Дублёные беличьи сухожилия', image: './assets/img/items/squirrel_tendon.webp' },
     bear_meat: { name: 'Медвежатина', image: './assets/img/items/bear_meat.webp' },
+    cooked_bear_meat: { name: 'Готовая медвежатина', image: './assets/img/items/cooked_bear_meat.webp' },
 
     // --- Океан ---
     serpent_meat: { name: 'Мясо змея', image: './assets/img/items/serpent_meat.webp' },
